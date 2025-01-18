@@ -1,0 +1,22 @@
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Monitor frame -->
+  <rect x="30" y="30" width="240" height="140" rx="10" fill="#333" />
+
+  <!-- Monitor screen -->
+  <rect x="40" y="40" width="220" height="120" rx="6" fill="#1a1a1a" />
+
+  <!-- The text "Cured!" -->
+  <text x="50%" y="50%" fill="#00ff00" font-size="24" text-anchor="middle" dy=".3em">
+    Cured!
+  </text>
+  
+  <!-- Example heartbeat line -->
+  <path d="M60 90 
+           L80 90 
+           L85 70 
+           L90 110 
+           L95 90 
+           L110 90" 
+        stroke="#00ff00" stroke-width="2" fill="none" />
+</svg>

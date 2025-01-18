@@ -1,0 +1,39 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Doctor's body -->
+  <rect x="60" y="100" width="80" height="100" rx="10" fill="#ffffff" />
+  <!-- Doctor's head -->
+  <circle cx="100" cy="80" r="20" fill="#ffe0bd" />
+  <!-- Stethoscope hint -->
+  <path d="M 90 105 C 80 110, 80 120, 90 125 
+           S 110 135, 110 125 
+           C 120 120, 120 110, 110 105" 
+        fill="none" stroke="#333" stroke-width="2" />
+
+  <!-- Patient’s body -->
+  <rect x="160" y="100" width="80" height="100" rx="10" fill="#f4cccc" />
+  <!-- Patient’s headwrap -->
+  <circle cx="200" cy="80" r="15" fill="#9999cc" />
+  <!-- Patient’s face -->
+  <circle cx="200" cy="80" r="12" fill="#ffe0bd" />
+
+  <!-- Doctor’s arm leading to handshake -->
+  <path d="M 140 140 C 150 140, 150 150, 150 150
+           C 150 150, 150 160, 140 160" 
+        fill="none" stroke="#ffe0bd" stroke-width="6" />
+  <!-- Patient’s arm leading to handshake -->
+  <path d="M 160 140 C 150 140, 150 150, 150 150
+           C 150 150, 150 160, 160 160" 
+        fill="none" stroke="#ffe0bd" stroke-width="6" />
+
+  <!-- Small hearts to show excitement -->
+  <path d="M80 50 
+           Q70 20, 50 40 
+           Q30 20, 20 50 
+           Q20 70, 40 90 
+           L50 100 
+           L60 90 
+           Q80 70, 80 50
+           Z" fill="#ff6060" />
+
+</svg>
