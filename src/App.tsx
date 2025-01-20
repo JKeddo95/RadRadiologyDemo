@@ -1,6 +1,6 @@
 import { useState } from "react";
 import happyPatient from "/happyPatient.svg";
-import hearts from "/hearts.svg";
+import healthMonitor from "/healthMonitor.svg";
 import "./App.css";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
           <img src={happyPatient} className="react" alt="Rad Radiology logo" />
         </a>
         <a href="https://react.dev" target="_blank">
-          <img src={hearts} className="react" alt="Rad Radiology hearts" />
+          <img src={healthMonitor} className="react" alt="Rad Radiology healthMonitor" />
         </a>
       </div>
       <h1>Rad Radiology</h1>
