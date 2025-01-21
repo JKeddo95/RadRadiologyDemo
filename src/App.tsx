@@ -26,7 +26,6 @@ function App() {
             justifyContent: "flex-start",
             borderWidth: "2px",
             borderColor: "red",
-            marginTop: "3em",
           }}
         >
           <PatientsMenu />

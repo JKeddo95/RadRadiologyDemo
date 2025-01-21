@@ -56,8 +56,6 @@ export const PatientsMenu = () => {
 
   return (
     <div>
-      <br />
-      <br />
       <h2>List of Patients</h2>
       <AddPatientPopup addPatientToList={addPatientToList} />
       <div>
@@ -129,7 +127,7 @@ const AddPatientPopup = ({ addPatientToList }: any) => {
 
   return (
     <div>
-      <button id="addPatientButton" onClick={toggleDialog}>
+      <button id="addPatientButton" style={{ marginBottom: "1em" }} onClick={toggleDialog}>
         Add Patient
       </button>
       <dialog id="addPatientModal" ref={dialogRef}>
