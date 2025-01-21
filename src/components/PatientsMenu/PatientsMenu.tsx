@@ -31,7 +31,7 @@ export const PatientsMenu = () => {
   };
 
   const deletePatient = (indexToDelete: number) => {
-    const newPatientsList = patientsList.filter((patient, index) => index !== indexToDelete);
+    const newPatientsList = patientsList.filter((patient, index) => !!patient && index !== indexToDelete);
     setPatientsList(newPatientsList);
   };
 
@@ -58,7 +58,7 @@ export const PatientsMenu = () => {
             </span>
           </div>
         ))}
-        <AddPatientPopup addPatientToList={addPatientToList} deletePatient={deletePatient} />
+        <AddPatientPopup addPatientToList={addPatientToList} />
       </div>
     </div>
   );
@@ -82,7 +82,7 @@ const parsePatientsList = () => {
   }
 };
 
-const AddPatientPopup = ({ addPatientToList, deletePatient }) => {
+const AddPatientPopup = ({ addPatientToList }: any) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value);
