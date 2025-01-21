@@ -2,4 +2,13 @@
   float: "left";
   filter: drop-shadow(0 0 2em blue);
   background-color: rgba(138, 43, 226, 0.7);
+  text-align: left;
+}
+
+.patientEntry {
+  text-align: left;
+}
+
+.patientInfo {
+  min-width: 90%;
 }

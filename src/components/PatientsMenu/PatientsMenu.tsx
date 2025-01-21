@@ -59,23 +59,25 @@ export const PatientsMenu = () => {
       <br />
       <br />
       <h2>List of Patients</h2>
+      <AddPatientPopup addPatientToList={addPatientToList} />
       <div>
         {patientsList.map((patient: Patient, patientNo) => (
           <div className={"patientEntry"} key={`${patientNo}_${patient.name}_${patient.age}`}>
-            <span>{patientNo + 1}.</span>
-            <span onClick={() => updatePatientName(patientNo, patient.name)}> {patient.name}</span>
-            <span onClick={() => updatePatientAge(patientNo, patient.age)}>, age {patient.age}</span>
-            <span> | </span>
+            <span className={"patientInfo"}>
+              <span>{patientNo + 1}.</span>
+              <span onClick={() => updatePatientName(patientNo, patient.name)}> {patient.name}</span>
+              <span onClick={() => updatePatientAge(patientNo, patient.age)}>, age {patient.age}</span>
+              <span> | </span>
+            </span>
             <span onClick={() => console.log("Update Patient Details")}>
               <ManagePatientPopup currentStatus={patient.status} patientNumber={patientNo} />
             </span>
             <span> | </span>
-            <span style={{ color: "red" }} onClick={() => deletePatient(patientNo)}>
+            <span style={{ color: "salmon" }} onClick={() => deletePatient(patientNo)}>
               delete
             </span>
           </div>
         ))}
-        <AddPatientPopup addPatientToList={addPatientToList} />
       </div>
     </div>
   );
