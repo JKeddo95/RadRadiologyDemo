@@ -17,7 +17,7 @@ function App() {
       <h1>Rad Radiology</h1>
       <div className="card">
         <p>
-          <code>Providers</code> and patients first -- Period!
+          Providers and patients first -- <code>Period</code>!
         </p>
         <div
           style={{
