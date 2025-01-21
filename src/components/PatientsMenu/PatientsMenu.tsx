@@ -1,10 +1,13 @@
 // PatientList.tsx
 import React, { useEffect, useState, useRef } from "react";
-import { Patient, PATIENTS_LIST, PATIENT_HEALTH_LEVEL } from "../library/usefulConstants";
+import { Patient, PATIENTS_LIST } from "../library/usefulConstants";
 import "./patientMenu.css";
+import exampleScanOne from "/exampleScanOne.jpeg";
+import exampleScanTwo from "/exampleScanTwo.jpeg";
+import { mockPatientArrayString } from "../library/mocks";
 
 export const PatientsMenu = () => {
-  localStorage.setItem(PATIENTS_LIST, `[{"name": "anna", "age": 29, "status": "pending review"}, {"name": "zack", "age": 35, "status": "pending review"}]`);
+  localStorage.setItem(PATIENTS_LIST, mockPatientArrayString);
   const patientsString = localStorage.getItem(PATIENTS_LIST);
 
   if (!patientsString) {
@@ -63,8 +66,8 @@ export const PatientsMenu = () => {
             <span onClick={() => updatePatientName(patientNo, patient.name)}> {patient.name}</span>
             <span onClick={() => updatePatientAge(patientNo, patient.age)}>, age {patient.age}</span>
             <span> | </span>
-            <span style={{ color: "yellow" }} onClick={() => console.log("Update Patient Details")}>
-              manage
+            <span onClick={() => console.log("Update Patient Details")}>
+              <ManagePatientPopup currentStatus={patient.status} patientNumber={patientNo} />
             </span>
             <span> | </span>
             <span style={{ color: "red" }} onClick={() => deletePatient(patientNo)}>
@@ -142,5 +145,36 @@ const AddPatientPopup = ({ addPatientToList }: any) => {
         </button>
       </dialog>
     </div>
+  );
+};
+
+const ManagePatientPopup = ({ currentStatus, patientNumber }: any) => {
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const toggleDialog = () => {
+    if (dialogRef === null || !dialogRef?.current?.hasAttribute) {
+      return false;
+    }
+    try {
+      dialogRef.current.hasAttribute("open") ? dialogRef.current.close() : dialogRef.current.showModal();
+    } catch (e) {
+      console.warn("There was a problem toggling the AddPatient popup/dialog, errMessage: ", JSON.stringify(e));
+    }
+  };
+
+  return (
+    <span>
+      <span style={{ color: "yellow" }} id="addPatientButton" onClick={toggleDialog}>
+        status: {currentStatus}
+      </span>
+      <dialog id="addPatientModal" ref={dialogRef}>
+        <div>
+          <div>Patient Scans:</div>
+          <img src={patientNumber % 2 === 0 ? exampleScanOne : exampleScanTwo} alt="Patient radiology images"></img>
+        </div>
+        <button id="addPatientSubmit" onClick={toggleDialog}>
+          Cancel
+        </button>
+      </dialog>
+    </span>
   );
 };

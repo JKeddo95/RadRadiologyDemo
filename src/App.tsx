@@ -1,4 +1,3 @@
-import { useState } from "react";
 import happyPatient from "/happyPatient.svg";
 import healthMonitor from "/healthMonitor.svg";
 import { PatientsMenu } from "./components/PatientsMenu/PatientsMenu.tsx";
