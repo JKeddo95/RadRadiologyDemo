@@ -1,6 +1,7 @@
 import { useState } from "react";
 import happyPatient from "/happyPatient.svg";
 import healthMonitor from "/healthMonitor.svg";
+import { PatientsMenu } from "./components/PatientsMenu/PatientsMenu.tsx";
 import "./App.css";
 
 function App() {
@@ -22,6 +23,19 @@ function App() {
         <p>
           <code>Providers</code> and patients first -- Period!
         </p>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            maxWidth: "60%",
+            borderWidth: "2px",
+            borderColor: "red",
+            marginTop: "3em",
+          }}
+        >
+          <PatientsMenu />
+        </div>
       </div>
     </>
   );
