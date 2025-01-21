@@ -1,6 +1,7 @@
 // PatientList.tsx
 import React, { useEffect, useState, useRef } from "react";
 import { Patient, PATIENTS_LIST } from "../library/usefulConstants";
+import "./patientMenu.css";
 
 export const PatientsMenu = () => {
   localStorage.setItem(PATIENTS_LIST, `[{"name": "anna", "age": 29}, {"name": "zack", "age": 35}]`);
@@ -41,9 +42,9 @@ export const PatientsMenu = () => {
       <h2>List of Patients</h2>
       <div>
         {patientsList.map((patient: Patient, patientNo) => (
-          <div style={{ float: "left" }} key={`${patientNo}_${patient.name}_${patient.age}`}>
+          <div className={"patientEntry"} key={`${patientNo}_${patient.name}_${patient.age}`}>
             <span>{patientNo + 1}.</span>
-            <span style={{ minWidth: "50%" }}>
+            <span>
               {" "}
               {patient.name}, age {patient.age}
             </span>
