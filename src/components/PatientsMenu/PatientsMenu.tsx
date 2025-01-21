@@ -29,14 +29,20 @@ export const PatientsMenu = () => {
     setPatientsList(newPatientsList);
   };
 
+  const deletePatient = (indexToDelete: number) => {
+    const newPatientsList = patientsList.filter((patient, index) => index !== indexToDelete);
+    setPatientsList(newPatientsList);
+  };
+
   return (
     <div>
       <br />
       <br />
       <h2>List of Patients</h2>
       <div>
-        {patientsList.map((patient: Patient) => (
-          <div style={{ float: "left" }} key={`${patient.name}_${patient.age}`}>
+        {patientsList.map((patient: Patient, patientNo) => (
+          <div style={{ float: "left" }} key={`${patientNo}_${patient.name}_${patient.age}`}>
+            <span>{patientNo + 1}.</span>
             <span style={{ minWidth: "50%" }}>
               {" "}
               {patient.name}, age {patient.age}
@@ -46,12 +52,12 @@ export const PatientsMenu = () => {
               edit
             </span>
             <span> | </span>
-            <span style={{ color: "red" }} onClick={() => console.log("delete patient")}>
+            <span style={{ color: "red" }} onClick={() => deletePatient(patientNo)}>
               delete
             </span>
           </div>
         ))}
-        <AddPatientPopup addPatientToList={addPatientToList} />
+        <AddPatientPopup addPatientToList={addPatientToList} deletePatient={deletePatient} />
       </div>
     </div>
   );
@@ -75,7 +81,7 @@ const parsePatientsList = () => {
   }
 };
 
-const AddPatientPopup = ({ addPatientToList }) => {
+const AddPatientPopup = ({ addPatientToList, deletePatient }) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value);
