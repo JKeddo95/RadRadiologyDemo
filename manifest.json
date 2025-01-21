@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "radRadiologySidebar",
+  "version": "1.0",
+  "description": "A helpful sidebar allowing teleradiology providers to help patients while simultaneously browsing other parts of the web.",
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "permissions": ["sidePanel"]
+}
