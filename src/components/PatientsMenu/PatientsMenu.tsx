@@ -54,6 +54,13 @@ export const PatientsMenu = () => {
     console.log(`patientslist[${patientNo}].name updated from ${currentName} to ${newPatientsList[patientNo].name}`);
   };
 
+  const updatePatientStatus = (patientNo: number, newStatus: string) => {
+    const newPatientsList = [...patientsList];
+    newPatientsList[patientNo].status = newStatus;
+    setPatientsList(newPatientsList);
+    console.log(`patientslist[${patientNo}].status updated to ${newStatus}`);
+  };
+
   return (
     <div>
       <h2>List of Patients</h2>
@@ -68,7 +75,7 @@ export const PatientsMenu = () => {
               <span> | </span>
             </span>
             <span onClick={() => console.log("Update Patient Details")}>
-              <ManagePatientPopup currentStatus={patient.status} patientNumber={patientNo} />
+              <ManagePatientPopup currentStatus={patient.status} patientNumber={patientNo} updateStatus={updatePatientStatus} />
             </span>
             <span> | </span>
             <span style={{ color: "salmon" }} onClick={() => deletePatient(patientNo)}>
@@ -81,6 +88,7 @@ export const PatientsMenu = () => {
   );
 };
 
+//TODO: Move this to be dedicated util function
 const parsePatientsList = () => {
   const patientsString = localStorage.getItem(PATIENTS_LIST);
   if (!patientsString) {
@@ -99,6 +107,7 @@ const parsePatientsList = () => {
   }
 };
 
+//TODO: Move this to dedicated component
 const AddPatientPopup = ({ addPatientToList }: any) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -148,14 +157,25 @@ const AddPatientPopup = ({ addPatientToList }: any) => {
   );
 };
 
-const ManagePatientPopup = ({ currentStatus, patientNumber }: any) => {
+//TODO: Move this to dedicated component
+const ManagePatientPopup = ({ currentStatus, patientNumber, updateStatus }: any) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const [chosenStatus, setChosenStatus] = useState(currentStatus);
+  const handleChosenStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => setChosenStatus(e.target.value);
+  const statusColor = currentStatus === "healthy" ? "lightgreen" : "yellow";
+
   const toggleDialog = () => {
     if (dialogRef === null || !dialogRef?.current?.hasAttribute) {
       return false;
     }
     try {
-      dialogRef.current.hasAttribute("open") ? dialogRef.current.close() : dialogRef.current.showModal();
+      if (dialogRef.current.hasAttribute("open")) {
+        console.log("Updating patient status to ", chosenStatus);
+        updateStatus(patientNumber, chosenStatus);
+        dialogRef.current.close();
+      } else {
+        dialogRef.current.showModal();
+      }
     } catch (e) {
       console.warn("There was a problem toggling the AddPatient popup/dialog, errMessage: ", JSON.stringify(e));
     }
@@ -163,16 +183,33 @@ const ManagePatientPopup = ({ currentStatus, patientNumber }: any) => {
 
   return (
     <span>
-      <span style={{ color: "yellow" }} id="addPatientButton" onClick={toggleDialog}>
+      <span style={{ color: statusColor }} id="addPatientButton" onClick={toggleDialog}>
         status: {currentStatus}
       </span>
-      <dialog id="addPatientModal" ref={dialogRef}>
+      <dialog id="addPatientModal" ref={dialogRef} style={{ minWidth: "70%" }}>
         <div>
-          <div>Patient Scans:</div>
-          <img src={patientNumber % 2 === 0 ? exampleScanOne : exampleScanTwo} alt="Patient radiology images"></img>
+          <div>
+            <div>Patient Scans:</div>
+            <img src={patientNumber % 2 === 0 ? exampleScanOne : exampleScanTwo} alt="Patient radiology images"></img>
+          </div>
+          <span> Current Patient Status: {chosenStatus || currentStatus}</span>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", maxWidth: "50%" }}>
+            <span>
+              <input type="radio" value="healthy" name="patientStatus" onChange={handleChosenStatusChange} /> healthy
+            </span>
+            <span>
+              <input type="radio" value="stable" name="patientStatus" onChange={handleChosenStatusChange} /> stable
+            </span>
+            <span>
+              <input type="radio" value="sick" name="patientStatus" onChange={handleChosenStatusChange} /> sick
+            </span>
+            <span>
+              <input type="radio" value="pending review" name="patientStatus" onChange={handleChosenStatusChange} /> pending review
+            </span>
+          </div>
         </div>
         <button id="addPatientSubmit" onClick={toggleDialog}>
-          Cancel
+          Save
         </button>
       </dialog>
     </span>
