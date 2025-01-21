@@ -1,10 +1,10 @@
 // PatientList.tsx
 import React, { useEffect, useState, useRef } from "react";
-import { Patient, PATIENTS_LIST } from "../library/usefulConstants";
+import { Patient, PATIENTS_LIST, PATIENT_HEALTH_LEVEL } from "../library/usefulConstants";
 import "./patientMenu.css";
 
 export const PatientsMenu = () => {
-  localStorage.setItem(PATIENTS_LIST, `[{"name": "anna", "age": 29}, {"name": "zack", "age": 35}]`);
+  localStorage.setItem(PATIENTS_LIST, `[{"name": "anna", "age": 29, "status": "pending review"}, {"name": "zack", "age": 35, "status": "pending review"}]`);
   const patientsString = localStorage.getItem(PATIENTS_LIST);
 
   if (!patientsString) {
@@ -35,6 +35,22 @@ export const PatientsMenu = () => {
     setPatientsList(newPatientsList);
   };
 
+  const updatePatientAge = (patientNo: number, currentAge: number) => {
+    const newAge = prompt(`Update patient age to `, String(currentAge));
+    const newPatientsList = [...patientsList];
+    newPatientsList[patientNo].age = parseInt(String(newAge)) || currentAge;
+    setPatientsList(newPatientsList);
+    console.log(`patientslist[${patientNo}].age updated from ${currentAge} to ${newPatientsList[patientNo].age}`);
+  };
+
+  const updatePatientName = (patientNo: number, currentName: string) => {
+    const newAge = prompt(`Update patient age to `, currentName);
+    const newPatientsList = [...patientsList];
+    newPatientsList[patientNo].name = newAge || currentName;
+    setPatientsList(newPatientsList);
+    console.log(`patientslist[${patientNo}].name updated from ${currentName} to ${newPatientsList[patientNo].name}`);
+  };
+
   return (
     <div>
       <br />
@@ -44,13 +60,11 @@ export const PatientsMenu = () => {
         {patientsList.map((patient: Patient, patientNo) => (
           <div className={"patientEntry"} key={`${patientNo}_${patient.name}_${patient.age}`}>
             <span>{patientNo + 1}.</span>
-            <span>
-              {" "}
-              {patient.name}, age {patient.age}
-            </span>
+            <span onClick={() => updatePatientName(patientNo, patient.name)}> {patient.name}</span>
+            <span onClick={() => updatePatientAge(patientNo, patient.age)}>, age {patient.age}</span>
             <span> | </span>
-            <span style={{ color: "yellow" }} onClick={() => console.log("edit patient")}>
-              edit
+            <span style={{ color: "yellow" }} onClick={() => console.log("Update Patient Details")}>
+              manage
             </span>
             <span> | </span>
             <span style={{ color: "red" }} onClick={() => deletePatient(patientNo)}>
@@ -102,7 +116,7 @@ const AddPatientPopup = ({ addPatientToList }: any) => {
 
   const submitDialog = () => {
     console.log(`Adding patient with age ${age} and name ${name}`);
-    addPatientToList({ name: name, age: age });
+    addPatientToList({ name: name, age: age, status: "pending review" });
     setName("");
     setAge("");
     toggleDialog();
