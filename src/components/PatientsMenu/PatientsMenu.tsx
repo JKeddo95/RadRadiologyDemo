@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Patient, PATIENTS_LIST } from "../library/usefulConstants";
 
 export const PatientsMenu = () => {
-  localStorage.setItem(PATIENTS_LIST, `[{"name": "anna", "age": 2}, {"name": "zack", "age": 3}]`);
+  localStorage.setItem(PATIENTS_LIST, `[{"name": "anna", "age": 29}, {"name": "zack", "age": 35}]`);
   const patientsString = localStorage.getItem(PATIENTS_LIST);
 
   if (!patientsString) {
