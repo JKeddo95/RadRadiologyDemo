@@ -8,10 +8,10 @@ function App() {
     <>
       <div>
         <a href="https://react.dev" target="_blank">
-          <img src={happyPatient} className="logo" alt="Rad Radiology logo" />
+          <img src={happyPatient} className="logo" alt="Rad Radiology logo" width="300" height="300" />
         </a>
         <a href="https://react.dev" target="_blank">
-          <img src={healthMonitor} className="logo" alt="Rad Radiology healthMonitor" />
+          <img src={healthMonitor} className="logo" alt="Rad Radiology healthMonitor" width="300" height="200" />
         </a>
       </div>
       <h1>Rad Radiology</h1>
