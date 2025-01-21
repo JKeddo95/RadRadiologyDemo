@@ -11,49 +11,23 @@ export const PatientsMenu = () => {
     return <></>;
   }
 
-  //   const [name, setName] = useState("");
-  //   const [age, setAge] = useState("");
-  const [patientsList, setPatientsList] = useState([]);
+  const [patientsList, setPatientsList] = useState<Patient[]>([]);
 
+  //Initial load+parse is from localStorage, but subsequent values come from "patientsList" react state
   useEffect(() => {
-    const patientsString = localStorage.getItem(PATIENTS_LIST);
-
-    if (!patientsString) {
-      console.log("No patients set yet");
-      //result false;
-    }
-
-    let patients;
-    try {
-      console.log(`Patients string is the following: ${patientsString}`);
-      patients = JSON.parse(String(patientsString));
-      setPatientsList(patients);
-    } catch (error) {
-      console.warn("Parsing of patients list failed. All children destroyed. Sorry :(");
-      //result false;
-    }
+    let patients = parsePatientsList();
+    setPatientsList(patients);
   }, []);
-
-  //   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value);
-  //   const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => setAge(e.target.value);
-
-  //   const dialogComponent = (
-  //     <dialog id="addPatientModal" ref={dialogRef}>
-  //       <div>Add Patient</div>
-  //       <span>Name: </span>
-  //       <input value={name} onChange={handleNameChange} />
-  //       <span>Age: </span>
-  //       <input value={String(age)} onChange={handleAgeChange} />
-  //       <button id="addPatientSubmit" onClick={toggleDialog}>
-  //         Submit
-  //       </button>
-  //     </dialog>
-  //   );
 
   if (!patientsString) {
     console.log("No patients set yet");
     return <></>;
   }
+
+  const addPatientToList = (newPatient: Patient) => {
+    const newPatientsList = [...patientsList, newPatient];
+    setPatientsList(newPatientsList);
+  };
 
   return (
     <div>
@@ -61,14 +35,9 @@ export const PatientsMenu = () => {
       <br />
       <h2>List of Patients</h2>
       <div>
-        {/* <div>
-          <button id="addPatientButton" onClick={toggleDialog}>
-            Add Patient
-          </button>
-        </div> */}
         {patientsList.map((patient: Patient) => (
-          <div style={{ float: "left" }} key={patient.name}>
-            <span>
+          <div style={{ float: "left" }} key={`${patient.name}_${patient.age}`}>
+            <span style={{ minWidth: "50%" }}>
               {" "}
               {patient.name}, age {patient.age}
             </span>
@@ -82,13 +51,31 @@ export const PatientsMenu = () => {
             </span>
           </div>
         ))}
-        <AddPatientPopup />
+        <AddPatientPopup addPatientToList={addPatientToList} />
       </div>
     </div>
   );
 };
 
-const AddPatientPopup = () => {
+const parsePatientsList = () => {
+  const patientsString = localStorage.getItem(PATIENTS_LIST);
+  if (!patientsString) {
+    console.log("No patients set yet");
+    return false;
+  }
+
+  try {
+    console.log(`Patients string is the following: ${patientsString}`);
+    const parsedList = JSON.parse(String(patientsString));
+    console.log(`Parsed list succesfully, type was of ${typeof parsedList}`);
+    return parsedList;
+  } catch (error) {
+    console.warn("Parsing of patients list failed. All children destroyed. Sorry :(");
+    return false;
+  }
+};
+
+const AddPatientPopup = ({ addPatientToList }) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value);
@@ -108,6 +95,7 @@ const AddPatientPopup = () => {
 
   const submitDialog = () => {
     console.log(`Adding patient with age ${age} and name ${name}`);
+    addPatientToList({ name: name, age: age });
     setName("");
     setAge("");
     toggleDialog();
