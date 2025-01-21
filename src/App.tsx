@@ -5,8 +5,6 @@ import { PatientsMenu } from "./components/PatientsMenu/PatientsMenu.tsx";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <div>
@@ -19,7 +17,6 @@ function App() {
       </div>
       <h1>Rad Radiology</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
         <p>
           <code>Providers</code> and patients first -- Period!
         </p>
@@ -28,7 +25,6 @@ function App() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
-            maxWidth: "60%",
             borderWidth: "2px",
             borderColor: "red",
             marginTop: "3em",
